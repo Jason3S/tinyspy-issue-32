@@ -10,6 +10,17 @@ Issue: <https://github.com/tinylibs/tinyspy/issues/32>
 
 It should be possible to mock a class and have `instanceof` return the right value.
 
+To change to a working version, change
+
+```diff
+   "pnpm": {
+     "overrides": {
+-      "tinyspy": "1.1.0"
++      "tinyspy": "1.0.2"
+     }
+   },
+```
+
 ## Files
 
 **[`MyClass.test.ts`](./src/MyClass.test.ts)**
