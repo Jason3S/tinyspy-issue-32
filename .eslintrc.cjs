@@ -46,12 +46,7 @@ const config = {
                         tryExtensions: ['.js', '.d.ts', '.ts'],
                     },
                 ],
-                'node/no-unsupported-features/es-syntax': [
-                    'error',
-                    {
-                        ignores: ['modules'],
-                    },
-                ],
+                'node/no-unsupported-features/es-syntax': 'off',
             },
         },
         {
@@ -60,7 +55,7 @@ const config = {
     ],
     settings: {
         'import/parsers': {
-            '@typescript-eslint/parser': ['.ts', '.tsx'],
+            '@typescript-eslint/parser': ['.mts'],
         },
         'import/resolver': {
             typescript: {

@@ -1,85 +1,88 @@
-# template-typescript-cli-app
+# 1.1.0 breaks instanceOf tests
 
-A Repository Template for TypeScript Command Line Applications / Tools
-
-This is a simple command line tool that lists files matching the provided globs.
+Issue: <https://github.com/tinylibs/tinyspy/issues/32>
 
 ## Getting Started
 
 1.  Install [`pnpm`](https://pnppm.io)
-
 1.  `pnpm i`
-
 1.  `pnpm test`
 
-1.  `pnpm run app --help`
+It should be possible to mock a class and have `instanceof` return the right value.
 
-    <!--- @@inject: static/help.txt --->
+## Files
 
-    ```
-    Usage: list-files [options] <files...>
+**[`MyClass.test.ts`](./src/MyClass.test.ts)**
 
-    List Files
+<!--- @@inject: ./src/MyClass.test.ts --->
 
-    Arguments:
-      files                 Files to scan for injected content.
+```ts
+import { afterEach, describe, expect, test, vi } from 'vitest';
 
-    Options:
-      --no-must-find-files  No error if files are not found.
-      --cwd <dir>           Current Directory
-      --color               Force color.
-      --no-color            Do not use color.
-      -V, --version         output the version number
-      -h, --help            display help for command
-    ```
+import { MyClass } from './MyClass.js';
+import { create, isMyClass } from './MyClassUtil.js';
 
-    <!--- @@inject-end: static/help.txt --->
+vi.mock('./MyClass.js');
 
-1.  `pnpm run app "*"`
+const mockedMyClass = vi.mocked(MyClass);
 
-    **Example:**
+// class MockImplementationMyClass {
+//     constructor(readonly name: string) {}
+// }
 
-    <!--- @@inject: static/example.txt --->
+// mockedMyClass.mockImplementation((name) => new MockImplementationMyClass(name));
 
-    ```
-    Find Files:
-     - LICENSE
-     - README.md
-     - bin.mjs
-     - coverage
-     - cspell.config.yaml
-     - dist
-     - package.json
-     - pnpm-lock.yaml
-     - release-please-config.json
-     - scripts
-     - src
-     - static
-     - tsconfig.json
-     - vitest.config.ts
-    done.
-    ```
+describe('MyClass', () => {
+  afterEach(() => {
+    mockedMyClass.mockClear();
+  });
 
-    <!--- @@inject-end: static/example.txt --->
+  test.each`
+    name          | expected
+    ${'Atlantic'} | ${'Atlantic'}
+    ${'Pacific'}  | ${'Pacific'}
+  `('new MyClass $name', ({ name, expected }) => {
+    const instance = create(name);
+    expect(isMyClass(instance)).toBe(true);
+    expect(instance).toBeInstanceOf(MyClass);
+    expect(mockedMyClass).toHaveBeenCalledTimes(1);
+    expect(mockedMyClass).toHaveBeenCalledWith(expected);
+  });
+});
+```
 
-## `pnpm` - this template uses pnpm.
+<!--- @@inject-end: ./src/MyClass.test.ts --->
 
-See: https://pnpm.io/
+**[`MyClass.ts`](./src/MyClass.ts)**
 
-## `vitest` - this template uses ViTest for testing.
+<!--- @@inject: ./src/MyClass.ts --->
 
-See: https://vitest.dev/
+```ts
+export class MyClass {
+  constructor(readonly name: string) {}
+}
+```
 
-## ES Modules
+<!--- @@inject-end: ./src/MyClass.ts --->
 
-This tools is setup to use ES Modules.
+**[`MyClassUtil.ts`](./src/MyClassUtil.ts)**
 
-## GitHub Workflows
+<!--- @@inject: ./src/MyClassUtil.ts --->
 
-This template includes GitHub Workflows for:
+```ts
+import { MyClass } from './MyClass.js';
 
-- testing
-- code coverage
-- lint
-- release please (for generating releases)
-- CodeQL
+export function create(name: string): MyClass {
+  return new MyClass(name);
+}
+
+export function isMyClass(val: unknown): val is MyClass {
+  return val instanceof MyClass;
+}
+```
+
+<!--- @@inject-end: ./src/MyClassUtil.ts --->
+
+<!---
+cspell:dictionaries typescript
+--->

@@ -1,5 +1,5 @@
 $schema: https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
-version: '0.2'
+version: "0.2"
 ignorePaths:
   - .git/{FETCH_HEAD,HEAD,index,packed-refs,config}
   - .git/*/*/**
@@ -7,8 +7,8 @@ ignorePaths:
   - .gitignore
   - .prettierignore
   - .vscode
-  - '*-lock.*'
-  - '*.lock'
+  - "*-lock.*"
+  - "*.lock"
   - /coverage
   - /dist
   - CHANGELOG.md
@@ -26,6 +26,7 @@ words:
   - coverallsapp
   - lcov
   - pnpm
+  - tinyspy
   - vitest
 ignoreWords: []
 import: []
