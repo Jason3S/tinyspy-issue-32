@@ -17,14 +17,12 @@
     "prettier:fix": "prettier -w .",
     "eslint": "eslint .",
     "eslint:fix": "eslint . --fix",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
     "prepare": "pnpm build"
   },
-  "keywords": [
-    "template",
-    "hello"
-  ],
+  "keywords": ["template", "hello"],
   "author": {
     "name": "Street Side Software",
     "url": "https://github.com/streetsidesoftware"
@@ -39,6 +37,7 @@
     "@types/node": "^18.13.0",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
+    "@vitest/ui": "latest",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-typescript": "^3.5.3",
@@ -52,12 +51,7 @@
     "vitest": "^0.26.3"
   },
   "dependencies": {},
-  "files": [
-    "dist/**/*.mjs",
-    "dist/**/*.js",
-    "!**/*.test.*",
-    "!**/*.map"
-  ],
+  "files": ["dist/**/*.mjs", "dist/**/*.js", "!**/*.test.*", "!**/*.map"],
   "pnpm": {
     "overrides": {
       "tinyspy": "1.1.0"

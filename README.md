@@ -21,6 +21,16 @@ To change to a working version, change
    },
 ```
 
+## StackBlitz
+
+[StackBlitz](https://stackblitz.com/edit/vitest-dev-vitest-dhhorq?file=README.md)
+
+**Terminal**
+
+```sh
+pnpm install && pnpm run test:ui
+```
+
 ## Files
 
 **[`MyClass.test.ts`](./src/MyClass.test.ts)**
